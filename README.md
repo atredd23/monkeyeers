@@ -1,75 +1,113 @@
-# React + TypeScript + Vite
+# Monkeyeers Match Host
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Monkeyeers Match Host is a party game app inspired by Monikers-style play. Players split into teams and try to guess the same set of cards across three rounds, with clue rules getting stricter each round.
 
-Currently, two official plugins are available:
+## What The Game Is
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This app is a host screen for in-person gameplay. It helps you:
 
-## React Compiler
+- Add and manage players
+- Collect card words/topics for the game
+- Assign or randomize teams
+- Run timed turns with pass limits
+- Track team scores by round and total
+- Continue games after refresh using local storage
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+Cards can be typed manually and can also be loaded from [public/cards.txt](public/cards.txt).
 
-Note: This will impact Vite dev & build performances.
+## Game Flow
 
-## Expanding the ESLint configuration
+1. Add players.
+2. Configure game options (turn time, pass limit).
+3. Each player enters 3 cards.
+4. Assign teams (or randomize).
+5. Play three rounds using the same card set.
+6. View final standings.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Round Rules
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Round 1: Taboo Style
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Use words and sounds.
+- No gestures.
+- Do not say part of the answer.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Round 2: One Word
+
+- Give exactly one word as a clue.
+- No gestures.
+
+### Round 3: Charades
+
+- No words and no sounds.
+- Gesture only.
+
+## Turn Rules
+
+- Each turn is timed.
+- You can pass based on the configured pass setting.
+- If time expires, the app asks whether the last card should count.
+- At manual turn end, the app also asks whether the final card should count.
+
+## Persistence
+
+The app saves:
+
+- Active game state (phase, deck, scores, turn info)
+- Player roster (for quick new games)
+
+This is stored in browser local storage, so refresh should resume your game.
+
+## Requirements
+
+- Node.js 20.19+ (or Node.js 22.12+)
+- npm
+
+## Getting Started
+
+From the project root, install dependencies:
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Run in development mode:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+Open the local URL printed by Vite (typically http://localhost:5173).
+
+## Build For Production
+
+```bash
+npm run build
+```
+
+Preview production build locally:
+
+```bash
+npm run preview
+```
+
+## Optional: Custom Card Library
+
+Edit [public/cards.txt](public/cards.txt) and place one card/topic per line.
+
+Example:
+
+```text
+Albert Einstein
+Jurassic Park
+The Great Wall of China
+Taylor Swift
+Basketball
+```
+
+## Scripts
+
+- `npm run dev` - start dev server
+- `npm run build` - type-check and create production build
+- `npm run preview` - preview production build
+- `npm run lint` - run ESLint
