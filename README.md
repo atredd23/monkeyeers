@@ -2,6 +2,8 @@
 
 Monkeyeers Match Host is a party game app inspired by Monikers-style play. Players split into teams and try to guess the same set of cards across three rounds, with clue rules getting stricter each round.
 
+___This project is a personal, non-commercial adaptation built for learning purposes. No copyright infringement intended. All rights to the original Monikers game belong to their respective owners.___
+
 ## What The Game Is
 
 This app is a host screen for in-person gameplay. It helps you:
